@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: replica-test
+  namespace: dashboard
+  labels:
+    app: replica-test
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: replica-test
+  template:
+    metadata:
+      name: replica-test
+      labels:
+        app: replica-test
+    spec:
+      imagePullSecrets:
+        - name: registry-credentials
+      containers:
+        - name: replica-test
+          image: ${IMAGE_TAG}
+          ports:
+            - containerPort: 8989
+
+      restartPolicy: Always
+
+# replica-test-7fbfd666f8-dpv86
+# replica-test-7fbfd666f8-r9ddf
